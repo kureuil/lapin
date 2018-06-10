@@ -30,7 +30,7 @@ impl<T> Clone for Channel<T>
   }
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct AccessRequestOptions {
   pub exclusive: bool,
   pub passive:   bool,
@@ -39,7 +39,7 @@ pub struct AccessRequestOptions {
   pub read:      bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct ExchangeDeclareOptions {
   pub ticket:      u16,
   pub passive:     bool,
@@ -49,26 +49,26 @@ pub struct ExchangeDeclareOptions {
   pub nowait:      bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct ExchangeDeleteOptions {
   pub ticket:    u16,
   pub if_unused: bool,
   pub nowait:    bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct ExchangeBindOptions {
   pub ticket: u16,
   pub nowait: bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct ExchangeUnbindOptions {
   pub ticket: u16,
   pub nowait: bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct QueueDeclareOptions {
   pub ticket:      u16,
   pub passive:     bool,
@@ -78,29 +78,29 @@ pub struct QueueDeclareOptions {
   pub nowait:      bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct QueueUnbindOptions {
   pub ticket: u16
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct ConfirmSelectOptions {
   pub nowait: bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct QueueBindOptions {
   pub ticket: u16,
   pub nowait: bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct QueuePurgeOptions {
   pub ticket: u16,
   pub nowait: bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct BasicPublishOptions {
   pub ticket:    u16,
   pub mandatory: bool,
@@ -109,7 +109,7 @@ pub struct BasicPublishOptions {
 
 pub type BasicProperties = basic::Properties;
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct BasicConsumeOptions {
   pub ticket:    u16,
   pub no_local:  bool,
@@ -118,20 +118,20 @@ pub struct BasicConsumeOptions {
   pub no_wait:   bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct BasicGetOptions {
   pub ticket:    u16,
   pub no_ack:    bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct BasicQosOptions {
   pub prefetch_size:  u32,
   pub prefetch_count: u16,
   pub global:         bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct QueueDeleteOptions {
   pub ticket:    u16,
   pub if_unused: bool,
@@ -139,7 +139,7 @@ pub struct QueueDeleteOptions {
   pub no_wait:   bool,
 }
 
-#[derive(Clone,Debug,Default,PartialEq)]
+#[derive(Copy,Clone,Debug,Default,PartialEq)]
 pub struct ChannelFlowOptions {
   pub active: bool,
 }
