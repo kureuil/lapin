@@ -127,16 +127,34 @@ extern crate cookie_factory;
 extern crate bytes;
 extern crate futures;
 extern crate lapin_async;
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 extern crate nom;
+#[cfg(test)]
+#[macro_use]
+extern crate tokio;
 extern crate tokio_codec;
+#[cfg(test)]
+#[macro_use]
+extern crate tokio_executor;
 extern crate tokio_io;
 extern crate tokio_timer;
 
+#[cfg(test)]
+#[macro_use]
+mod test_support;
+
 #[macro_use] pub mod transport;
+mod background;
+mod commands;
 pub mod client;
 pub mod channel;
+mod error;
 pub mod consumer;
 pub mod queue;
 pub mod message;
+mod pulse;
 pub mod types;
+
+pub use background::{Background, BackgroundHandle};
+pub use error::Error;
