@@ -7,6 +7,7 @@ use error::Error;
 /// Heartbeat command.
 ///
 /// Used to signal that the current peer is still alive to the RabbitMQ server.
+#[derive(Debug, PartialEq, Eq)]
 pub(crate) struct Heartbeat;
 
 impl Heartbeat {

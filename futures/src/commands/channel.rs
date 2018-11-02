@@ -1,9 +1,11 @@
 use lapin_async::connection::Connection;
+use lapin_async::api::RequestId;
 
 use commands::Command;
 use error::{Error, ErrorKind};
 
 /// command used to open a channel against RabbitMQ.
+#[derive(Debug)]
 pub(crate) struct Open {
 	request_id: Option<RequestId>,
 }

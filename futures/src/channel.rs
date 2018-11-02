@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+
 use std::io::{self,Error,ErrorKind};
 use futures::{Async,Future,future,Poll,Stream,task};
 use futures::sync::mpsc;

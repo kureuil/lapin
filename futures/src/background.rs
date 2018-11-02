@@ -1,7 +1,8 @@
 use futures::{Async, Future, Poll, Stream};
 use futures::sync::{oneshot, mpsc};
-use std::time::Duration;
+use std::time::{Duration, Instant};
 use tokio_io::{AsyncRead, AsyncWrite};
+use tokio_timer::Interval;
 
 use commands::Command;
 use error::{Error, ErrorKind};
@@ -31,6 +32,7 @@ where
 /// The handle to the background task.
 ///
 /// When this value is dropped (or goes out of scope), the background task is signaled to stop.
+#[derive(Debug)]
 pub struct BackgroundHandle(Option<oneshot::Sender<()>>);
 
 impl<T> Background<T>
@@ -42,7 +44,8 @@ where
         let (shutdown_tx, shutdown) = oneshot::channel();
         let handle = Some(BackgroundHandle(Some(shutdown_tx)));
         let (sender, commands) = mpsc::channel(1024);
-        let pulse = Pulse::new(Duration::from_secs(60), sender.clone());
+        let interval = Interval::new(Instant::now(), Duration::from_secs(60));
+        let pulse = Pulse::new(interval, sender.clone());
         Background {
             transport,
             shutdown,

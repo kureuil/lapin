@@ -1,6 +1,5 @@
 use futures::{task, sink, Async, Future, Poll, Sink, Stream};
 use futures::sync::mpsc;
-use std::time::{Instant, Duration};
 use tokio_timer::Interval;
 
 use commands::{self, Command};
@@ -16,8 +15,7 @@ pub(crate) struct Pulse {
 
 impl Pulse {
     /// Create a new `Pulse` future instance.
-    pub(crate) fn new(interval: Duration, chan: mpsc::Sender<Box<dyn Command>>) -> Self {
-        let interval = Interval::new(Instant::now(), interval);
+    pub(crate) fn new(interval: Interval, chan: mpsc::Sender<Box<dyn Command>>) -> Self {
         Pulse {
             interval,
             chan,
@@ -67,6 +65,7 @@ mod tests {
     use super::*;
     use test_support::*;
 
+    use std::time::Duration;
     use tokio::runtime::current_thread::Runtime;
 
     #[test]
@@ -75,11 +74,7 @@ mod tests {
             let (tx, mut rx) = mpsc::channel(16);
             let duration = Duration::from_secs(60);
             let interval = Interval::new(time.now(), duration);
-            let mut pulse = Pulse {
-                interval,
-                chan: tx,
-                task: None,
-            };
+            let mut pulse = Pulse::new(interval, tx);
 
             // Enqueue sending task
             assert_not_ready!(pulse);
@@ -88,7 +83,7 @@ mod tests {
 
             // Pulse should have send command to channel
             assert_not_ready!(pulse);
-            assert_ready_eq!(rx, Some(()));
+            assert_ready_eq!(rx, Some(Box::new(commands::heartbeat::Heartbeat)));
 
             // Should not enqueue task if called before interval duration
             assert_not_ready!(pulse);
@@ -104,7 +99,7 @@ mod tests {
 
             // Pulse should have send command to channel
             assert_not_ready!(pulse);
-            assert_ready_eq!(rx, Some(()));
+            assert_ready_eq!(rx, Some(Box::new(commands::heartbeat::Heartbeat)));
         });
     }
 }

@@ -37,7 +37,7 @@ impl fmt::Display for ErrorKind {
             ErrorKind::TimerDropped => write!(f, "the timer used for the heartbeat has been dropped"),
             ErrorKind::Transport(e) => write!(f, "an error occured in the transport: {}", e),
             ErrorKind::ChannelLimitReached => write!(f, "open channel limit reached"),
-            ErrorKind::ProtocolError(e) => write!(f, "a protocol error occured: {}", e),
+            ErrorKind::ProtocolError(e) => write!(f, "a protocol error occured: {:?}", e),
         }
     }
 }
